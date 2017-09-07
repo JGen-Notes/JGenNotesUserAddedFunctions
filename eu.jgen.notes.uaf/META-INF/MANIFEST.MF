@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Uaf
+Bundle-SymbolicName: eu.jgen.notes.uaf
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: eu.jgen.notes.uaf.Activator
+Bundle-Vendor: JGen Notes
+Require-Bundle: org.eclipse.core.runtime,
+ eu.jgen.notes.annot.desc;bundle-version="1.0.0",
+ com.ca.gen.jmmi;bundle-version="8.5.0",
+ org.eclipse.xtext.xbase;bundle-version="2.12.0",
+ org.eclipse.xtext.testing,
+ org.eclipse.xtext.xbase.testing,
+ org.eclipse.xtext.xbase.lib,
+ org.junit;bundle-version="4.12.0",
+ org.eclipse.emf.common,
+ ch.qos.logback.classic;bundle-version="1.0.7",
+ org.eclipse.egit.mylyn.ui;bundle-version="4.8.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Import-Package: com.google.common.base,
+ eu.jgen.notes.ab.direct.mgr,
+ org.eclipse.xtext.junit4
+Export-Package: eu.jgen.notes.uaf,
+ eu.jgen.notes.uaf.proc

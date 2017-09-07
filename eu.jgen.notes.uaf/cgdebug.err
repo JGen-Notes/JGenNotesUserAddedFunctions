@@ -1,0 +1,16 @@
+abg.exe, C:\jgen.notes.models.test\tstuaf3.ief\notes\java, JVM, JDBC, INTERNET, JAVA, JAVAC, OFF, *, *, ABC, *, *, *, *, YES.
+ABG generating Encyid: 22020104
+os       JVM
+lang     JAVA
+dbms     JDBC
+compiler JAVAC
+tpmon    INTERNET
+MBCS set code page ID: 1252.
+Starting Action Block Generator
+Generated 492 lines of Java.
+Writing output file: C:\jgen.notes.models.test\tstuaf3.ief\notes\java\eu/jgen/notes/samples FDTV.java
+Wrote 147 lines.
+Writing output file: C:\jgen.notes.models.test\tstuaf3.ief\notes\java\eu/jgen/notes/samples FDTV_IA.java
+Wrote 129 lines.
+Writing output file: C:\jgen.notes.models.test\tstuaf3.ief\notes\java\eu/jgen/notes/samples FDTV_OA.java
+Wrote 129 lines.
