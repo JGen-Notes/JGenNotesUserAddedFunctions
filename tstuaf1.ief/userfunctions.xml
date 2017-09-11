@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Gen_Functions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Advantage_Gen_Function>
+	<Name>FAB01</Name>
+		<Description> Adds two numbers and returns sum of those numbers.
+		</Description>
+		<Domain>N</Domain>
+		<Entity_Name>XFAB01</Entity_Name>
+		<OPT>M</OPT>
+		<Gen_Specific>
+					<CGName>XFAB01</CGName>
+						<USESELEC>N</USESELEC>					
+					<DBMSNAME></DBMSNAME>					
+		</Gen_Specific>				
+		<IMPORTS>
+			<Import>
+			 <ENTVW>
+			  <NAME>  IMP1</NAME>
+			 </ENTVW>
+			<ATTRUSR>
+								<DOMAN>N</DOMAN>
+								<CASESENS>N</CASESENS>
+								<NAME>PARAM1</NAME>
+								<LEN>9</LEN>
+								<DECPLC>0</DECPLC>
+			</ATTRUSR>
+			<VIEWIMP>
+								<LENGTH>9</LENGTH>
+								<IMPTYPE>I</IMPTYPE>
+								<MISSING>N</MISSING>
+			</VIEWIMP>
+			</Import>
+			<Import>
+			 <ENTVW>
+			  <NAME>  IMP2</NAME>
+			 </ENTVW>
+			<ATTRUSR>
+								<DOMAN>N</DOMAN>
+								<CASESENS>N</CASESENS>
+								<NAME>PARAM2</NAME>
+								<LEN>9</LEN>
+								<DECPLC>0</DECPLC>
+			</ATTRUSR>
+			<VIEWIMP>
+								<LENGTH>9</LENGTH>
+								<IMPTYPE>I</IMPTYPE>
+								<MISSING>N</MISSING>
+			</VIEWIMP>
+			</Import>
+		</IMPORTS>
+		<EXPORTS>
+			<Export>
+								 <ENTVW>
+								  <NAME>  EXP</NAME>
+								 </ENTVW>
+								<ATTRUSR>
+													<DOMAN>N</DOMAN>
+													<CASESENS>N</CASESENS>
+													<NAME>RESULT</NAME>
+													<LEN>9</LEN>
+													<DECPLC>0</DECPLC>
+								</ATTRUSR>
+								<VIEWIMP>
+													<LENGTH>9</LENGTH>
+													<IMPTYPE>I</IMPTYPE>
+													<MISSING>N</MISSING>
+								</VIEWIMP>
+			</Export>
+		</EXPORTS>
+</Advantage_Gen_Function>
+</Gen_Functions>
