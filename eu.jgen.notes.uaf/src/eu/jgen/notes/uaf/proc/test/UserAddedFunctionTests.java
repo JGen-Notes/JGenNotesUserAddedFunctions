@@ -4,7 +4,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ca.gen.abrt.functions.ADD2NUM;
+//import com.ca.gen.abrt.functions.ADD2NUM;
 import com.ca.gen.vwrt.types.IntAttr;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -53,7 +53,7 @@ public class UserAddedFunctionTests {
 		 IntAttr result = IntAttr.getInstance();
 		 
 		 
-		 ADD2NUM.ADD2NUM(new Object(), new SessionContext(sessionManager.getGlobData()), sessionManager.getGlobData(), 1, 1, result);
+//		 ADD2NUM.ADD2NUM(new Object(), new SessionContext(sessionManager.getGlobData()), sessionManager.getGlobData(), 1, 1, result);
 		 
 		 System.out.println(result.get());
 	}

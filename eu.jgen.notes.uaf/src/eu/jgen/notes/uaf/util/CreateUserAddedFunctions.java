@@ -23,6 +23,7 @@
  */
 package eu.jgen.notes.uaf.util;
 
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,9 +63,10 @@ public class CreateUserAddedFunctions {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("Utility  User-Added Function (UAF), Version 0.5");
 		Map<String, String> options = new HashMap<String, String>();
-		if (args.length < 1 || args.length > 2) {
-			if(args.length == 3) {
+		if (args.length == 2 || args.length == 3) {
+			if (args.length == 3) {
 				if (args[2].equals(UserAddedFunctionProcessor.OPT_FORCE)) {
 					options.put(UserAddedFunctionProcessor.OPT_FORCE, args[2]) ;
 				} else if (args[2].equals(UserAddedFunctionProcessor.OPT_TEST)) {
@@ -72,19 +74,29 @@ public class CreateUserAddedFunctions {
 				} else if (args[2].equals(UserAddedFunctionProcessor.OPT_SOURCE)) {
 					options.put(UserAddedFunctionProcessor.OPT_SOURCE, args[2]) ;
 				}else {
-					System.out.println("Usage:  java  -jar jarfile  modelpath cagenpath [ -f | -t  | -s]");
-					System.out.println("    -f   force clean up entire generation frastructure");
-					System.out.println("    -t   generate test classes");
-					System.out.println("    -t   regenerate implementation classes only");
+					displayHelp();
 					return;
 				}
 			}
+		} else {
+			displayHelp();
+			return;
 		}
+		
 		System.out.println("Starting...");
 		options.put(UserAddedFunctionProcessor.OPT_NOTES_DIRECTORY, args[0] + OPT_SUBDIRECTORY_NAME);
+		options.put(UserAddedFunctionProcessor.OPT_LOCAL_NAME,  Paths.get(args[0]).getFileName().toString());
 		options.put(UserAddedFunctionProcessor.OPT_CAGEN_PATH, args[1]) ;
 		CreateUserAddedFunctions createUAF = new CreateUserAddedFunctions(options);
 		createUAF.start(args[0]);
+	}
+
+	private static void displayHelp() {
+		System.out.println("Usage:  java  -jar uaf.jar  modelpath cagenpath [ -forceall | -testonly  | -sourcesonly]");
+		System.out.println("     where:");
+		System.out.println("        -forceall   force clean up entire generation frastructure");
+		System.out.println("        -testonly   generate test classes only");
+		System.out.println("        -sourcesonly   regenerate implementation classes only");
 	}
 
 	private void start(String path) { 

@@ -100,7 +100,7 @@ class ArtifactsGenerator {
 								 <ENTVW>
 								  <NAME>  «entvw.getTextProperty(PrpTypeCode.NAME)»</NAME>
 								 </ENTVW>
-								«ArtifactsGenerator.createXMLAttrusr(prdvw.followSees)»
+								«ArtifactsGenerator.createXMLAttrusr(prdvw.followSees, "RESULT")»
 								«ArtifactsGenerator.createXMLViewimp(prdvw.followSees)»
 			</Export>
 		'''
@@ -110,6 +110,7 @@ class ArtifactsGenerator {
 	private def static String createXMLImport(AnnotationObject annotationObject) {
 		val imps = (annotationObject.genObject as Acblkbsd).followGrpby.followCntinps.followContains
 		var bigtext = new StringBuffer()
+		var param = 1;
 		for (element : imps) {
 			var list = (element as Entvw).followDtlbyp
 			for (prdvw : list) {
@@ -118,22 +119,23 @@ class ArtifactsGenerator {
 					 <ENTVW>
 					  <NAME>  «element.getTextProperty(PrpTypeCode.NAME)»</NAME>
 					 </ENTVW>
-					«ArtifactsGenerator.createXMLAttrusr(prdvw.followSees)»
+					«ArtifactsGenerator.createXMLAttrusr(prdvw.followSees, "PARAM"+ param)»
 					«ArtifactsGenerator.createXMLViewimp(prdvw.followSees)»
 					</Import>
 				'''
 				bigtext.append(text)
+				param++
 			}
 		}
 		return bigtext.toString
 	}
 
-	private def static String createXMLAttrusr(Attrusr attrusr) {
+	private def static String createXMLAttrusr(Attrusr attrusr, String name) {
 		var text = '''
 			<ATTRUSR>
 								<DOMAN>«attrusr.getTextProperty(PrpTypeCode.DOMAN)»</DOMAN>
 								<CASESENS>«attrusr.getTextProperty(PrpTypeCode.CASESENS)»</CASESENS>
-								<NAME>«attrusr.getTextProperty(PrpTypeCode.NAME)»</NAME>
+								<NAME>«name»</NAME>
 								<LEN>«attrusr.getIntProperty(PrpTypeCode.LEN)»</LEN>
 								<DECPLC>«attrusr.getIntProperty(PrpTypeCode.DECPLC)»</DECPLC>
 			</ATTRUSR>
@@ -146,11 +148,49 @@ class ArtifactsGenerator {
 		var text = '''
 			<VIEWIMP>
 								<LENGTH>«attrusr.getIntProperty(PrpTypeCode.LEN)»</LENGTH>
-								<IMPTYPE>X</IMPTYPE>
+								<IMPTYPE>«findImptype(attrusr)»</IMPTYPE>
 								<MISSING>N</MISSING>
 			</VIEWIMP>
 		'''
 		return text
+	}
+	
+	private def static String findImptype(Attrusr attrusr) {
+		val doman = String.valueOf(attrusr.doman)
+		if (doman == 'T') { // Text
+			return "X"
+		}
+		if (doman == "N" && attrusr.len <= 4 && attrusr.decplc == 0) { // Numeric
+			return "S"
+		}
+		if (doman == "N" && attrusr.len <= 9 && attrusr.decplc == 0) { // Numeric
+			return "I"
+		}
+		if (doman == "N" && attrusr.len > 9 && attrusr.decplc == 0) { // Numeric
+			return "LongAttr"
+		}
+		if (doman == "N" && attrusr.len > 9 && attrusr.decplc != 0) { // Numeric
+			return "F"
+		}
+		if (doman == 'D') { // Date
+			return "D"
+		}
+		if (doman == 'M') { // Time
+			return "T"
+		}
+		if (doman == 'Z') { // Mixed
+			return "X"
+		}
+		if (doman == 'Q') { // Timestamp
+			return "Q"
+		}
+		if (doman == 'B') { // Blob
+			return "B"
+		}
+		if (doman == 'G') { // DBCS
+			return "X"
+		}
+		return "?"
 	}
 
 	private static def String extractCommentFromAnnotation(AnnotationObject annotationObject) {
@@ -221,7 +261,7 @@ class ArtifactsGenerator {
 							<DBMSNAME>«dbmsname»</DBMSNAME>							
 						«ENDIF»
 						«IF !useselec»
-							</DBMSNAME>					
+							<DBMSNAME></DBMSNAME>					
 						«ENDIF»					
 			</Gen_Specific>				
 		'''
@@ -248,7 +288,8 @@ class ArtifactsGenerator {
 		processingEnv.getMessager().printMessage(DiagnosticKind.INFO,
 			"Function " + ArtifactsGenerator.TXT_FUNCTION_PACKAGE_NAME + "." + cgname + " generated.")
 		if (processingEnv.getOptions().getOrDefault(UserAddedFunctionProcessor.OPT_TEST, " ") ==
-			UserAddedFunctionProcessor.OPT_TEST) {
+			UserAddedFunctionProcessor.OPT_TEST || processingEnv.getOptions().getOrDefault(UserAddedFunctionProcessor.OPT_FORCE, " ") ==
+			UserAddedFunctionProcessor.OPT_FORCE) {
 			createFuntionTestClass(processingEnv, annotationObject, path, cgname)
 			processingEnv.getMessager().printMessage(DiagnosticKind.WARNING,
 				"Test class was regenerated. All previous modifications were lost.");
@@ -533,12 +574,13 @@ class ArtifactsGenerator {
 	}
 
 	public static def void generateMetaInf(ProcessingEnvironment processingEnv, String rootDirPath) {
+		val name = processingEnv.getOptions().get(UserAddedFunctionProcessor.OPT_LOCAL_NAME)
 		val writer = processingEnv.getFiler().openWriter(rootDirPath + "\\META-INF\\" + "MANIFEST.MF");
 		var text = '''
 			Manifest-Version: 1.0
 			Bundle-ManifestVersion: 2
-			Bundle-Name: Uaf
-			Bundle-SymbolicName: eu.jgen.notes.Uaf
+			Bundle-Name: «name»
+			Bundle-SymbolicName: your.name.UAF
 			Bundle-Version: 1.0.0.qualifier
 			Bundle-Vendor: JGen Notes
 			Require-Bundle: org.eclipse.xtext.testing,

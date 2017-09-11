@@ -8,7 +8,6 @@
 	<classpathentry kind="lib" path="C:/Program Files (x86)/CA/Gen86Free/Gen/classes/abrt.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/CA/Gen86Free/Gen/classes/vwrt.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/CA/Gen86Free/Gen/classes/csu.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/my.uaf"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/tstuaf1.ief"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

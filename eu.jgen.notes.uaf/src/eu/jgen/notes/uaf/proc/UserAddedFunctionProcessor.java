@@ -48,9 +48,10 @@ public class UserAddedFunctionProcessor extends AbstractProcessor {
 	private static final String DIRECTORY_GEN = "";
 	public static final String OPT_NOTES_DIRECTORY = "directory";
 	public static final String OPT_CAGEN_PATH = "cagenpath";
-	public static final String OPT_FORCE = "-f";
-	public static final String OPT_TEST = "-t";
-	public static final String OPT_SOURCE = "-s";
+	public static final String OPT_LOCAL_NAME = "localname"; 
+	public static final String OPT_FORCE = "-forceall";
+	public static final String OPT_TEST = "-testonly";
+	public static final String OPT_SOURCE = "-sourcesonly";
 
 	public UserAddedFunctionProcessor() {
 		super();
@@ -69,7 +70,8 @@ public class UserAddedFunctionProcessor extends AbstractProcessor {
 			ArtifactsGenerator.generateActionBlock(selection, processingEnv, javaDirPath); 
 			processingEnv.getMessager().printMessage(DiagnosticKind.WARNING, "Only action block sources will be regenerated.");	
 		} else {
-			ArtifactsGenerator.generateProjectFile(processingEnv, rootDirPath, "my.uaf");
+			String name = processingEnv.getOptions().get(UserAddedFunctionProcessor.OPT_LOCAL_NAME);
+			ArtifactsGenerator.generateProjectFile(processingEnv, rootDirPath, name);
 			ArtifactsGenerator.generateClasspathFile(processingEnv, rootDirPath,  processingEnv.getOptions().getOrDefault(OPT_CAGEN_PATH, "C:/Program Files (x86)/CA/Gen86Free"));
 			Set<AnnotationObject> selection = scanEnv.getElementsAnnotatedWith(eu.jgen.notes.uaf.proc.Function.class);
 			processingEnv.getMessager().printMessage(DiagnosticKind.INFO, "Found " + selection.size() + " function(s).");	
@@ -78,7 +80,6 @@ public class UserAddedFunctionProcessor extends AbstractProcessor {
 			ArtifactsGenerator.generateActionBlock(selection, processingEnv, javaDirPath); 
 			ArtifactsGenerator.generateMetaInf(processingEnv, rootDirPath);
 		}
-
 		return true;
 	}
 
